@@ -51,40 +51,49 @@ def rungame() :
     l_pos = []
     errors = 0
     error_to_display = []
+    letters_entered = []
     while word_to_guess != lst[iRand] and errors != 5:
         user_letter = input('Entrer une lettre : ')
-        letter_pos = places_lettre(user_letter, lst[iRand])
-        if letter_pos == [] :
-            print("La lettre entrée ne se trouve pas dans le mot : {}".format(word_to_guess))
-            errors += 1
+        if user_letter in letters_entered :
+            letters_entered.append(user_letter)
         else :
-            for i in letter_pos :
-                l_pos.append(i)
-            word_to_guess = outputStr(lst[iRand], l_pos)
-        print("Voici ce que vous avez jusque là : {}".format(word_to_guess))
-        if errors == 0 :
-            print("Encore 5 erreurs autorisées ! faites attention ;)")
-        else :
-            if(errors == 1) :
-                print("1 erreur : ",errors_list[0])
-            if(errors == 2) :
-                print("2 erreurs : ",errors_list[1])
-                print("1 erreur : ",errors_list[0])
-            if(errors == 3) :
-                print("3 erreurs : ",errors_list[2])
-                print("2 erreurs : ",errors_list[1])
-                print("1 erreurs : ",errors_list[0])
-            if(errors == 4) :
-                print("4 erreurs : ",errors_list[3])
-                print("3 erreurs : ",errors_list[2])
-                print("2 erreurs : ",errors_list[1])
-                print("1 erreur : ",errors_list[0])
-            if(errors == 5) :
-                print("5 erreurs : ",errors_list[4])
-                print("4 erreurs : ",errors_list[3])
-                print("3 erreurs : ",errors_list[2])
-                print("2 erreurs : ",errors_list[1])
-                print("1 erreur : ",errors_list[0])
-                print("C'est PERDU !!!!!!! le mot était : {}".format(lst[iRand]))
+            letter_pos = places_lettre(user_letter, lst[iRand])
+            if letter_pos == [] :
+                print("La lettre entrée ne se trouve pas dans le mot : {}".format(word_to_guess))
+                errors += 1
+            else :
+                for i in letter_pos :
+                    l_pos.append(i)
+                word_to_guess = outputStr(lst[iRand], l_pos)
+            print("Voici ce que vous avez jusque là : {}".format(word_to_guess))
+            if errors == 0 :
+                print("Encore 5 erreurs autorisées ! faites attention ;)")
+            else :
+                for i in range(errors,0,-1) :
+                    print("{} erreurs : ".format(i),errors_list[i - 1])
+                    # if error_count == 5 :
+                    #     print("C'est PERDU !!!!!!! le mot était : {}".format(lst[iRand]))
+                    
+
+                # if(errors == 1) :
+                #     print("1 erreur : ",errors_list[0])
+                # if(errors == 2) :
+                #     print("2 erreurs : ",errors_list[1])
+                #     print("1 erreur : ",errors_list[0])
+                # if(errors == 3) :
+                #     print("3 erreurs : ",errors_list[2])
+                #     print("2 erreurs : ",errors_list[1])
+                #     print("1 erreurs : ",errors_list[0])
+                # if(errors == 4) :
+                #     print("4 erreurs : ",errors_list[3])
+                #     print("3 erreurs : ",errors_list[2])
+                #     print("2 erreurs : ",errors_list[1])
+                #     print("1 erreur : ",errors_list[0])
+                # if(errors == 5) :
+                #     print("5 erreurs : ",errors_list[4])
+                #     print("4 erreurs : ",errors_list[3])
+                #     print("3 erreurs : ",errors_list[2])
+                #     print("2 erreurs : ",errors_list[1])
+                #     print("1 erreur : ",errors_list[0])
 
 rungame()
