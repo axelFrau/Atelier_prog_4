@@ -25,7 +25,6 @@ def fill_list (b_inf:int,b_sup:int,max_len:int) -> list :
                 i += 1 #On incrémente le compteur i de 1
         except ValueError:  # C'est ici la gestion du cas où un autre caractère est rentrer qui ne serrais pas un chiffre ou un nombre.
             print("Il y eu une erreur recommencer s'il vous plait")
-            pass
     return res
 
 
