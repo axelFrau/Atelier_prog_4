@@ -32,7 +32,7 @@ def outputStr(mot:str, l_pos:list) -> str :
     return str_output
     pass
 
-print(outputStr("Bonjour",[0]))
+# print(outputStr("Bonjour",[0]))
 
 import random 
 def rungame() :
@@ -73,7 +73,10 @@ def rungame() :
                     print("{} erreurs : ".format(i),errors_list[i - 1])
                     # if error_count == 5 :
                     #     print("C'est PERDU !!!!!!! le mot était : {}".format(lst[iRand]))
-                    
+    if errors != 5 :
+        print("C'est gagné !!")
+    else :
+        print("Quel dommage ! Tu as fais trop d'erreurs ! le mot était : {}".format(lst[iRand]))
 
                 # if(errors == 1) :
                 #     print("1 erreur : ",errors_list[0])
