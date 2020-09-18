@@ -35,7 +35,15 @@ def outputStr(mot:str, l_pos:list) -> str :
 # print(outputStr("Bonjour",[0]))
 
 import random 
+import os
 def rungame() :
+    cwd = os.getcwd()
+    files = os.listdir(cwd)  # Get all the files in that directory
+    print("Files in %r: %s" % (cwd, files))
+    # file = open("littre.txt","r")
+    # content = file.readlines()
+    # print(content)
+    # file.close()
     lst =["parisa","londres","madrid","berlin","new-york"]
     lst_len= len(lst)
     # iRand = random.randint(1, lst_len)
