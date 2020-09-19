@@ -135,43 +135,206 @@ def placesLettres(char:str, mot:str)->list:
 # print(placesLettres('a','bonjour'))
 # print(placesLettres('m','maman'))
 
-def outputStr(mot : str)->str:
-    result = []
-    longueur = len(mot)
-    print(longueur)
-    a  = "_"
-    i = 0 
-    while i <= longueur:
-        i = i + 1
-        result.extend(a)
-    return result
+def outputStr(mot : str, lpos:list)->str:
+    """Prend un mot et ajoute à 'str_output' aux emplacements indiqué dans 'l_pos' le '-' par la lettre dans le mot"""
+    str_output = ''
+    i = 0
+    while i < len(mot) :
+        if i in lpos :
+            str_output += mot[i]
+        else :
+            str_output += '-'
+        i += 1
+    return str_output
 # print(outputStr('bonjour'))
 # print(outputStr('bon'))
 # print(outputStr('maman'))
 import random
 def runGame():
-    """"""
-    C5 = "|-----]"
-    C4 = "|  o"
-    C3 = "|  T"
-    C2 = "| / \ "
-    C1 = "|______"
-    iSizeDict = len(dSetWords)
-    iRand = random.randint(1, iSizeDict)
-    print(dSetWords[iRand])
-    game_str = outputStr(dSetWords[iRand].values)
-    print(game_str)
-    i = 1
-    while i <= 5:
-        cUserChar = input("entrer une lettre: ")
-        if cUserChar in dSetWords[iRand]:
-            print("il vous reste " + 5-i +"coups")
+    lst =["parisa","londres","madrid","berlin","new-york"]
+    lst_len= len(lst)
+    # iRand = random.randint(1, lst_len)
+    iRand = 1
+    errors_list = ["|______","|/ \ ","| T ","| O ","|---] "]
+    # "|---] "
+    # "| O "
+    # "| T "
+    # "|/ \ "
+    # "|______"
+    word_to_guess = outputStr(lst[iRand], [])
+    print("Voici le mot à trouver : {}".format(word_to_guess))
+    l_pos = []
+    errors = 0
+    error_to_display = []
+    letters_entered = []
+    while word_to_guess != lst[iRand] and errors != 5:
+        user_letter = input('Entrer une lettre : ')
+        if user_letter in letters_entered :
+            letters_entered.append(user_letter)
+        else :
+            letter_pos = places_lettre(user_letter, lst[iRand])
+            if letter_pos == [] :
+                print("La lettre entrée ne se trouve pas dans le mot : {}".format(word_to_guess))
+                errors += 1
+            else :
+                for i in letter_pos :
+                    l_pos.append(i)
+                word_to_guess = outputStr(lst[iRand], l_pos)
+            print("Voici ce que vous avez jusque là : {}".format(word_to_guess))
+            if errors == 0 :
+                print("Encore 5 erreurs autorisées ! faites attention ;)")
+            else :
+                for i in range(errors,0,-1) :
+                    print("{} erreurs : ".format(i),errors_list[i - 1])
+                    # if error_count == 5 :
+                    #     print("C'est PERDU !!!!!!! le mot était : {}".format(lst[iRand]))
+    if errors != 5 :
+        print("C'est gagné !!")
+    else :
+        print("Quel dommage ! Tu as fais trop d'erreurs ! le mot était : {}".format(lst[iRand]))
+"""
+Exercice 4 - Aide scrabble
+"""
+def mot_correspond(mot:str, motif:str)->bool :
+    """fonction qui renvoie True ou False suivant que la chaine 
+    de caractère mot correspond, ou pas, à la chaine de caractères 
+    motif donnée"""
+    if len(mot) == len(motif) :
+        for i in range(len(mot)) :
+            if mot[i] != motif[i] and motif[i] != "." :
+                return False
+        return True
+    else :
+        return False
+#mot_correspondant("tante","t..t.")
+#mot_correspondant("cheval","c..v..l")
+#mot_correspondant("cheval","c..v.l")
 
-dSetWords = {
-    1:("paris",5),
-    2:("londre",6),
-    3:("madrid",6),
-    4:("new-york",8),
-    5:("berlin",6)
-}
-runGame()
+def presente(lettre:str, mot:str)->bool :
+    for e in mot :
+        if e == lettre :
+            return True
+    return False
+#print(present("virgule","u"))
+#print(present("virgule","y"))
+#print(present("","u"))
+
+def presente_while(lettre:str, mot:str)->bool :
+    test = -1
+    i = 0
+    while i < len(mot) and test == -1 :
+        if mot[i] == lettre :
+            test = i
+        i += 1
+    return test
+
+def presente_2(lettre:str, mot:str)->int : #faire un while
+    for i in range(len(mot)) :
+        if mot[i] == lettre :
+            return i
+    return -1
+
+def presences(lettre:str, mot:str)->list :
+    list_return = []
+    for i in range(len(mot)) :
+        if mot[i] == lettre :
+            list_return.append(i)
+    return list_return
+
+def mot_possible(mot:str, chaine:str)->bool :
+    for e in mot :
+        if not presente(e, chaine) :
+            return False
+        else :
+            chaine = (chaine[:(chaine.index(e))]) + (chaine[chaine.index(e)+1:])
+    return True
+
+def mot_possible_2(mot:str, chaine:str)->bool :
+    for e in mot :
+        i = presente_2(e, chaine)
+        if i == -1 :
+            return False
+        else :
+            chaine = (chaine[:i]) + (chaine[i+1:])
+    return True
+
+def mot_possible_3(mot:str, chaine:str)->bool :
+    for e in mot :
+        index = presences(e, chaine)
+        if index == [] :
+            return False
+        elif len(index) == 1 :
+            chaine = (chaine[:index[0]]) + (chaine[index[0]+1:len(chaine)])
+        else :
+            for i in range(len(index)) :
+                chaine = (chaine[:index[i]]) + (chaine[index[i]+1:])
+    return True
+"""
+Exercice 5 - Vérification d'expressions arithmétiques
+"""
+def ouvrante(char:str)->bool :
+    chars = ["(", "[", "{"]
+    for e in chars :
+        if e == char :
+            return True
+    return False
+
+
+def fermante(char:str)->bool :
+    chars = [")", "]", "}"]
+    for e in chars :
+        if e == char :
+            return True
+    return False
+
+def renverse(char:str)->str :
+    open_chars = ["(", "[", "{"]
+    close_chars = [")", "]", "}"]
+    if fermante(char) :
+        for i in range(len(close_chars)) :
+            if char == close_chars[i] :
+                return open_chars[i]
+    elif ouvrante(char) :
+        for i in range(len(open_chars)) :
+            if char == open_chars[i] :
+                return close_chars[i]
+    else :
+        return char
+
+def operateur(char:str)->bool :
+    if char == '*' or char == '+' :
+        return True
+    else :
+        return False
+
+def nombre(char:str)->bool :
+    return char.isdigit()
+
+def caractere_valide(char:str)->bool :
+    if (ouvrante(char) or fermante(char) or
+        operateur(char) or nombre(char) or char == ' ') :
+            return True
+    else :
+        return False
+
+def verif_parentheses(expression:str)->bool :
+    P = []
+    for e in expression :
+        if caractere_valide(e) :
+            if ouvrante(e) or fermante(e) :
+                P.append(e)
+        else :
+            return False
+    for _ in range(len(P)//2) :
+        if P[0] == renverse(P[-1]) :
+            P.pop(0)
+            P.pop(-1)
+    if P == [] :
+        return True
+    else :
+        return False
+
+##print(renverse('['))
+##print(nombre('5'))
+##print(nombre('f'))
+# print(verif_parentheses("(()()"))
