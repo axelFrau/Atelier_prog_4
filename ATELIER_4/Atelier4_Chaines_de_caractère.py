@@ -195,6 +195,8 @@ def runGame():
 """
 Exercice 4 - Aide scrabble
 """
+
+# Remarque : Nivet te dirais d'eviter de faire trop de return et des juste stocké le résultat dans une variable et de faire un return à la fin :3
 def mot_correspond(mot:str, motif:str)->bool :
     """fonction qui renvoie True ou False suivant que la chaine 
     de caractère mot correspond, ou pas, à la chaine de caractères 

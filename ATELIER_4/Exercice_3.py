@@ -23,7 +23,8 @@ def outputStr(mot:str, l_pos:list) -> str :
     """Prend un mot et ajoute à 'str_output' aux emplacements indiqué dans 'l_pos' le '-' par la lettre dans le mot"""
     str_output = ''
     i = 0
-    while i < len(mot) :
+    while i < len(mot):
+        print(i)
         if i in l_pos :
             str_output += mot[i]
         else :
@@ -34,20 +35,30 @@ def outputStr(mot:str, l_pos:list) -> str :
 
 # print(outputStr("Bonjour",[0]))
 
+def build_list(filename: str) -> list :
+    # cwd = os.getcwd()
+    # files = os.listdir(cwd)  # Get all the files in that directory
+    # print("Files in %r: %s" % (cwd, files))
+    file = open("ATELIER_4/" + filename + ".txt","r")
+    liste = []
+    chaine = ''
+    data = file.readlines()
+    print(data)
+    for i in data : 
+        chaine += i
+        chaine.split("\t")
+        liste.append(chaine)
+    print(liste)
+    # print(content)
+    file.close()
+    return ["liste","liste","liste","liste","liste"]
+
 import random 
 import os
 def rungame() :
-    cwd = os.getcwd()
-    files = os.listdir(cwd)  # Get all the files in that directory
-    print("Files in %r: %s" % (cwd, files))
-    # file = open("littre.txt","r")
-    # content = file.readlines()
-    # print(content)
-    # file.close()
-    lst =["parisa","londres","madrid","berlin","new-york"]
+    lst = build_list("littre_smaller")
     lst_len= len(lst)
-    # iRand = random.randint(1, lst_len)
-    iRand = 1
+    iRand = random.randint(1, lst_len)
     errors_list = ["|______","|/ \ ","| T ","| O ","|---] "]
     # "|---] "
     # "| O "
@@ -55,6 +66,7 @@ def rungame() :
     # "|/ \ "
     # "|______"
     word_to_guess = outputStr(lst[iRand], [])
+    print('le mot est : {}'.format(lst[iRand]))
     print("Voici le mot à trouver : {}".format(word_to_guess))
     l_pos = []
     errors = 0
@@ -73,7 +85,7 @@ def rungame() :
                 for i in letter_pos :
                     l_pos.append(i)
                 word_to_guess = outputStr(lst[iRand], l_pos)
-            print("Voici ce que vous avez jusque là : {}".format(word_to_guess))
+            print("Voici ce que vous avez jusque là : {} mot à trouver : {}".format(word_to_guess,lst[iRand] ))
             if errors == 0 :
                 print("Encore 5 erreurs autorisées ! faites attention ;)")
             else :
