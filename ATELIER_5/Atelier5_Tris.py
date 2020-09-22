@@ -33,8 +33,8 @@ Exercice 2 - Mélange des élément d'une liste
 def mix_list(list_to_mix:list):
     list = []
     longueur = len(list_to_mix)
-    indice = random.randint(0,longueur)
     for i in range(longueur):
+        indice = random.randint(0, longueur)
         list[indice].append(list_to_mix[i])
     return list
 a = [1,2,3,4,5,6,7,8,9]
